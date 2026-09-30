@@ -130,7 +130,13 @@ const MOCK_PROVIDERS: Provider[] = [
 ];
 
 export async function loader(): Promise<ProvidersResponse> {
-  return { providers: MOCK_PROVIDERS };
+  const response = await fetch(
+    "https://hackathon-patient-pulse.onrender.com/providers"
+  );
+  if (!response.ok) {
+    throw new Error(`Failed to fetch providers: ${response.status}`);
+  }
+  return response.json();
 }
 
 function Delta({ prior, next }: { prior: number; next: number }) {

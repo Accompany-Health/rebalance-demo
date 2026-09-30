@@ -130,7 +130,13 @@ const MOCK_PATIENTS: PatientAssignment[] = [
 ];
 
 export async function loader() {
-  return { patients: MOCK_PATIENTS };
+  const response = await fetch(
+    "https://hackathon-patient-pulse.onrender.com/patients"
+  );
+  if (!response.ok) {
+    throw new Error(`Failed to fetch patients: ${response.status}`);
+  }
+  return response.json();
 }
 
 const COLUMNS: {
